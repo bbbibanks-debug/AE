@@ -1,0 +1,37 @@
+name: Gerar HTML Estilo Bloomberg
+
+on:
+  push:
+    paths:
+      - 'entrada/**.docx'
+      - 'converter.py'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Executar script de conversão
+        run: python converter.py
+
+      - name: Salvar HTML gerado no repositório
+        run: |
+          git config --local user.email "github-actions[bot]@://github.com"
+          git config --local user.name "github-actions[bot]"
+          git add saida/index.html
+          git commit -m "Atualiza página HTML a partir do arquivo Word" || echo "Nenhuma alteração para salvar"
+          git push
