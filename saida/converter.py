@@ -10,8 +10,9 @@ if not arquivos_docx:
     print("Nenhum arquivo .docx encontrado na pasta 'entrada'.")
     exit(0)
 
-# CORREÇÃO: Pega o primeiro arquivo da lista [0]
+# Pega o primeiro arquivo da lista (usando índice 0)
 caminho_doc = arquivos_docx[0]
+print(f"Lendo arquivo: {caminho_doc}")
 doc = Document(caminho_doc)
 
 # Filtra parágrafos vazios
@@ -21,7 +22,7 @@ if not paragrafos:
     print("O documento está vazio.")
     exit(0)
 
-# CORREÇÃO: Pega o índice [0] para título e [1] para subtítulo
+# Pega o primeiro parágrafo como título e o segundo como subtítulo
 titulo = paragrafos[0]
 subtitulo = paragrafos[1] if len(paragrafos) > 2 else ""
 corpo_paragrafos = paragrafos[2:] if len(paragrafos) > 2 else paragrafos[1:]
