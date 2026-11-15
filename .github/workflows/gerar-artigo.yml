@@ -1,10 +1,12 @@
 name: Gerar HTML Estilo Bloomberg
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'entrada/**.docx'
       - 'converter.py'
+      - '.github/workflows/gerar-artigo.yml'
 
 permissions:
   contents: write
@@ -15,10 +17,10 @@ jobs:
 
     steps:
       - name: Baixar código do repositório
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Configurar Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
@@ -30,7 +32,7 @@ jobs:
 
       - name: Salvar HTML gerado no repositório
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "github-actions[bot]@://github.com"
           git config --local user.name "github-actions[bot]"
           git add saida/index.html
           git commit -m "Atualiza página HTML a partir do arquivo Word" || echo "Nenhuma alteração para salvar"
