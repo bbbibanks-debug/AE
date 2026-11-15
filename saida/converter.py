@@ -10,7 +10,7 @@ if not arquivos_docx:
     print("Nenhum arquivo .docx encontrado na pasta 'entrada'.")
     exit(0)
 
-# Pega o arquivo mais recente encontrado
+# CORREÇÃO: Pega o primeiro arquivo da lista [0]
 caminho_doc = arquivos_docx[0]
 doc = Document(caminho_doc)
 
@@ -21,7 +21,7 @@ if not paragrafos:
     print("O documento está vazio.")
     exit(0)
 
-# O primeiro parágrafo vira o Título Principal; o segundo (se existir) vira o subtítulo
+# CORREÇÃO: Pega o índice [0] para título e [1] para subtítulo
 titulo = paragrafos[0]
 subtitulo = paragrafos[1] if len(paragrafos) > 2 else ""
 corpo_paragrafos = paragrafos[2:] if len(paragrafos) > 2 else paragrafos[1:]
@@ -30,7 +30,7 @@ corpo_paragrafos = paragrafos[2:] if len(paragrafos) > 2 else paragrafos[1:]
 corpo_html = "\n".join([f"<p>{p}</p>" for p in corpo_paragrafos])
 
 # Data atual formatada
-data_atual = datetime.now().strftime("%d de %B de %Y • %H:%M")
+data_atual = datetime.now().strftime("%d/%m/%Y • %H:%M")
 
 # Template HTML/CSS inspirado no layout editorial da Bloomberg
 html_template = f"""<!DOCTYPE html>
@@ -62,7 +62,6 @@ html_template = f"""<!DOCTYPE html>
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }}
-        /* Barra superior estilo terminal/portal financeiro */
         header {{
             border-bottom: 1px solid var(--text-main);
             padding: 16px 24px;
@@ -85,7 +84,6 @@ html_template = f"""<!DOCTYPE html>
             letter-spacing: 0.08em;
             color: var(--accent-blue);
         }}
-        /* Container principal do artigo */
         main {{
             max-width: 720px;
             margin: 48px auto;
@@ -120,7 +118,6 @@ html_template = f"""<!DOCTYPE html>
             display: flex;
             gap: 16px;
         }}
-        /* Corpo do texto com fonte serifada editorial */
         .article-body {{
             font-family: 'Newsreader', Georgia, serif;
             font-size: 1.25rem;
@@ -130,7 +127,6 @@ html_template = f"""<!DOCTYPE html>
         .article-body p {{
             margin-bottom: 24px;
         }}
-        /* Destaque na primeira letra (Drop cap sutil) */
         .article-body p:first-of-type::first-letter {{
             font-family: 'Inter', sans-serif;
             font-weight: 800;
